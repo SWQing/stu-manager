@@ -1,0 +1,22 @@
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li onclick="leftClick()" class="<%=currentPage<=0?'disabled':''%>">
+      <a>
+        <span>&laquo;</span>
+      </a>
+    </li>
+
+    <%for(var i = 0;i<pageCount;i++){%>
+    <!--给li添加一个自定义属性，用于记录这个li是第几个-->
+    <li class="page-num <%=i==currentPage?'active':''%>" ind="<%=i%>">
+        <a><%=i+1%></a>
+    </li>
+    <%}%>
+
+    <li onclick="rightClick()" class="<%=currentPage>=pageCount-1?'disabled':''%>">
+      <a>
+        <span>&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,37 @@
+#stu-table{
+    margin-top: 40px;
+}
+
+
+#pager li{
+    cursor: pointer;
+}
+
+#condition-list{
+    margin-top: 20px;
+}
+
+.con-item{
+    margin-right: 20px;
+}
+
+#age-head{
+    cursor: pointer;
+}
+
+.stu-delete{
+    cursor: pointer;
+}
+
+.confirm-btn .layui-layer-btn0{
+    background-color: #999;
+}
+
+.confirm-btn .layui-layer-btn1{
+    background-color: red;
+}
+
+
+.cursor-pointer{
+    cursor: pointer;
+}

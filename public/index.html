@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="libs/jquery.js"></script>
+  <script src="libs/layer/layer.js"></script>
+  <script src="libs/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="libs/bootstrap-3.3.5-dist/css/bootstrap.css">
+  <script src="libs/ejs.js"></script>
+  <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body>
+
+  <!--导航条-->
+  <nav class="navbar navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">学生信息管理</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">帮助</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">校长<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">班级管理</a></li>
+              <li><a href="#">毕业管理</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">修改密码</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">退出登录</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!--页面主体-->
+  <div class="container">
+
+    <!--添加和搜索按钮-->
+    <div>
+      <button class="btn btn-primary" data-target="#add-modal" data-toggle="modal">添加新同学</button>
+      <button class="btn btn-warning" data-target="#search-modal" data-toggle="modal">搜索</button>
+    </div>
+
+    <!--条件列表-->
+    <div id="condition-list">
+      
+    </div>
+
+    <!--学生列表-->
+    <div id="stu-table"></div>
+
+    <!--分页符-->
+    <div id="pager"></div>
+
+  </div>
+
+
+
+  <!--添加学生模态框-->
+  <div class="modal fade" id="add-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title">学生添加</h4>
+        </div>
+        <div class="modal-body">
+          <form id="add-form" class="form-horizontal">
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label">姓名</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" name="name" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="age" class="col-sm-2 control-label">年龄</label>
+              <div class="col-sm-10">
+                <select name="age" id="age" class="form-control">
+                  <option>18</option>
+                  <option>19</option>
+                  <option>20</option>
+                  <option>21</option>
+                  <option>22</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">性别</label>
+              <div class="col-sm-10">
+                <div class="form-control">
+                  <span>男</span>
+                  <input type="radio" value="男" name="gender">
+                  <span>女</span>
+                  <input type="radio" value="女" name="gender" checked>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="tel" class="col-sm-2 control-label">手机号</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="tel" name="tel">
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">重置</button>
+          <button type="button" class="btn btn-primary" id="add-commit">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--搜索模态框-->
+  <div class="modal fade" id="search-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title">搜索条件</h4>
+        </div>
+        <div class="modal-body">
+          <form id="search-form" class="form-horizontal">
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label">姓名</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="search-name" name="name" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="age" class="col-sm-2 control-label">年龄</label>
+              <div class="col-sm-10">
+                <select name="age" id="search-age" class="form-control">
+                  <option value="">不限</option>
+                  <option>18</option>
+                  <option>19</option>
+                  <option>20</option>
+                  <option>21</option>
+                  <option>22</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">性别</label>
+              <div class="col-sm-10">
+                <div class="form-control">
+                  <span>不限</span>
+                  <input type="radio" value="" name="gender" checked>
+                  <span>男</span>
+                  <input type="radio" value="男" name="gender">
+                  <span>女</span>
+                  <input type="radio" value="女" name="gender">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="tel" class="col-sm-2 control-label">手机号</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="search-tel" name="tel">
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default">重置</button>
+          <button type="button" class="btn btn-primary" id="search-commit">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--修改模态框-->
+  <div class="modal fade" id="edit-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title">信息修改</h4>
+        </div>
+        <div class="modal-body">
+          <form id="edit-form" class="form-horizontal">
+            <div class="form-group">
+              <label for="edit-name" class="col-sm-2 control-label">姓名</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="edit-name" autocomplete="off" disabled>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-age" class="col-sm-2 control-label">年龄</label>
+              <div class="col-sm-10">
+                <select name="age" id="edit-age" class="form-control">
+                  <option>18</option>
+                  <option>19</option>
+                  <option>20</option>
+                  <option>21</option>
+                  <option>22</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">性别</label>
+              <div class="col-sm-10">
+                <div class="form-control">
+                  <span>男</span>
+                  <input id="male" type="radio" value="男" name="gender">
+                  <span>女</span>
+                  <input id="female" type="radio" value="女" name="gender" checked>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-tel" class="col-sm-2 control-label">手机号</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="edit-tel" name="tel">
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">重置</button>
+          <button type="button" class="btn btn-primary" id="edit-commit">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</body>
+
+<script src="js/index.js"></script>
+
+</html>
